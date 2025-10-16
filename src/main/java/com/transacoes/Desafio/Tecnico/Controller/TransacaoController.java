@@ -5,10 +5,7 @@ import com.transacoes.Desafio.Tecnico.Domain.Transacao.TransacaoDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.math.BigDecimal;
@@ -33,7 +30,13 @@ public class TransacaoController {
 
         if(trs.dataHora().isAfter(OffsetDateTime.now())) return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
 
-        var getTransacao = listTransacao.add(trs);
+        listTransacao.add(trs);
         return  ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    @DeleteMapping
+    public ResponseEntity deletarTransacoes(){
+        listTransacao.clear();
+        return ResponseEntity.ok().build();
+    };
 }
